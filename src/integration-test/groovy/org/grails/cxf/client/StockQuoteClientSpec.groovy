@@ -1,12 +1,13 @@
 package org.grails.cxf.client
 
-import grails.test.mixin.integration.Integration
+import grails.testing.mixin.integration.Integration
+import groovy.xml.XmlSlurper
 import net.webservicex.StockQuoteSoap
 import org.grails.cxf.client.exception.UpdateServiceEndpointException
 import spock.lang.Ignore
 import spock.lang.Specification
 
-import javax.xml.ws.WebServiceException
+import jakarta.xml.ws.WebServiceException
 
 @Integration
 @Ignore('The config is being merged... so removed it')
@@ -103,4 +104,5 @@ class StockQuoteClientSpec extends Specification {
         then:
         thrown(UpdateServiceEndpointException)
     }
+
 }

@@ -1,7 +1,3 @@
-BUILD STATUS
-==========
-[![Build Status](https://travis-ci.org/Grails-Plugin-Consortium/grails-cxf-client.png?branch=master)](https://travis-ci.org/Grails-Plugin-Consortium/grails-cxf-client)
-
 <a name="Top"></a>
 
 CXF CLIENT
@@ -40,6 +36,7 @@ The Cxf Client plugin will allow you to use existing (or new) apache cxf wsdl2ja
 
 <p align="right"><a href="#Top">Top</a></p>
 <a name="Script"></a>
+
 WsdlToJava Command
 ---------------
 
@@ -281,6 +278,7 @@ The following will also work
 
 <p align="right"><a href="#Top">Top</a></p>
 <a name="Manually"></a>
+
 WsdlToJava MANUALLY
 ----------------
 
@@ -307,6 +305,7 @@ Note: These could be put in the same jar since the namespace I am using is diffe
 
 <p align="right"><a href="#Top">Top</a></p>
 <a name="Plugin"></a>
+
 PLUGIN CONFIGURATION
 ----------------
 
@@ -424,12 +423,14 @@ _**NOTE:** You should type the beans with the cxf port interface type so as to g
 
 <p align="right"><a href="#Top">Top</a></p>
 <a name="Mime"></a>
+
 MIME ATTACHMENTS
 ----------------
 Functionality was recently added by Kyle Dickerson to support mime type attachements in a response.  To do this you will need to set both the _wsdl_ and _wsdlServiceName_ properties.  This is done so that cxf will be able to resolve correctly the attachment data against the wsdl.  If you fail to set these you may cause an IndexOutOfBounds thrown from cxf.  You may need to define _wsdlEndpointName_ as well.
 
 <p align="right"><a href="#Top">Top</a></p>
 <a name="Security"></a>
+
 CUSTOM SECURITY INTERCEPTORS
 ---------------
 
@@ -601,6 +602,7 @@ info 'blah.blah.blah' //whatever package your custom interceptors are in
 
 <p align="right"><a href="#Top">Top</a></p>
 <a name="Out"></a>
+
 CUSTOM OUT INTERCEPTORS
 ---------------
 You can wire in your own custom out interceptors by adding the property outInterceptors to the configured client.  In this example I have chosen to wire in my own out logging interceptors.
@@ -675,6 +677,7 @@ info 'blah.blah.blah' //whatever package your custom interceptors are in
 
 <p align="right"><a href="#Top">Top</a></p>
 <a name="InFault"></a>
+
 CUSTOM IN FAULT INTERCEPTORS
 ---------------
 
@@ -692,6 +695,7 @@ info 'blah.blah.blah' //whatever package your custom interceptors are in
 
 <p align="right"><a href="#Top">Top</a></p>
 <a name="OutFault"></a>
+
 CUSTOM OUT FAULT INTERCEPTORS
 ---------------
 
@@ -708,6 +712,7 @@ info 'blah.blah.blah' //whatever package your custom interceptors are in
 
 <p align="right"><a href="#Top">Top</a></p>
 <a name="Custom"></a>
+
 CUSTOM HTTP CLIENT POLICY
 ---------------
 
@@ -748,6 +753,7 @@ Note: If you incorrectly refer to your new beans name (spelling, etc) you will g
 
 <p align="right"><a href="#Top">Top</a></p>
 <a name="CustomAuth"></a>
+
 CUSTOM AUTHORIZATION POLICY
 ---------------
 
@@ -780,6 +786,7 @@ Note: If you incorrectly refer to your new beans name (spelling, etc) you will g
 
 <p align="right"><a href="#Top">Top</a></p>
 <a name="Exceptions"></a>
+
 DEALING WITH EXCEPTIONS
 ---------------
 As of version 1.2.9 of the plugin, I have fixed the issue so your services with checked exceptions defined will not throw them as designed.  Given some service that throws an exception (ComplexContrivedException_Exception in our case) as follows:
@@ -819,6 +826,7 @@ try {
 
 <p align="right"><a href="#Top">Top</a></p>
 <a name="Ssl"></a>
+
 SETTING SECURE SOCKET PROTOCOL
 ---------------
 
@@ -868,12 +876,14 @@ Not all features for http conduit are supported.  You can read more about condui
 
 <p align="right"><a href="#Top">Top</a></p>
 <a name="Beans"></a>
+
 USING CLIENT BEANS ANYWHERE
 ---------------
 If you require useage of the web service clients you can access them anywhere by accessing them by name.  The name of the bean will match the name of the configured client in your Config.groovy.
 
 <p align="right"><a href="#Top">Top</a></p>
 <a name="Endpoints"></a>
+
 RETRIEVING AND UPDATING ENDPOINTS
 ---------------
 The service endpoint address for any given service can be retrieved and updated at runtime using the WebserviceClientFactory interface.
@@ -927,6 +937,7 @@ log4j {
 
 <p align="right"><a href="#Top">Top</a></p>
 <a name="Demo"></a>
+
 DEMO PROJECT
 ---------------
 
@@ -936,6 +947,7 @@ I have also included the full code on how to inject a custom security intercepto
 
 <p align="right"><a href="#Top">Top</a></p>
 <a name="Issues"></a>
+
 ISSUES
 ---------------
 
@@ -977,22 +989,27 @@ compile("${cxfGroup}:cxf-tools-wsdlto-databinding-jaxb:${cxfVersion}") {
 
 <p align="right"><a href="#Top">Top</a></p>
 <a name="Change"></a>
+
 CHANGE LOG
 ---------------
 * v 3.0.6
 	* Name changed to simply `cxf-client` from `grails-cxf-client`
 
+
 * v 3.0.4
 	* Adding support for ConnectionType (eg. KEEP_ALIVE and CLOSE) on the http connection
+
 
 * v 3.0.1-3.0.3
     * Minor bug fixes
     * Rename plugin to remove the G3 from the name
     * Grails 3
 
+
 * v 3.0.0
     * Moving to CXF 3.1.x
     * Grails 3
+
 
 * v 2.1.1
     * Moving to WSS4j 2.0.3 as this is required (2+) for use with CXF 3+.
@@ -1096,14 +1113,15 @@ CHANGE LOG
 
 <p align="right"><a href="#Top">Top</a></p>
 <a name="Future"></a>
+
 FUTURE REVISIONS
 ---------------
 
 Currently taking submissions for improvements.
 
-
 <p align="right"><a href="#Top">Top</a></p>
 <a name="License"></a>
+
 LICENSE
 ---------------
 

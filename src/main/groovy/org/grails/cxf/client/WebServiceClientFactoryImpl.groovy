@@ -22,7 +22,7 @@ import org.apache.cxf.transport.http.HTTPConduit
 import org.apache.cxf.transports.http.configuration.HTTPClientPolicy
 
 import javax.xml.namespace.QName
-import javax.xml.ws.BindingProvider
+import jakarta.xml.ws.BindingProvider
 import java.lang.reflect.*
 
 class WebServiceClientFactoryImpl implements WebServiceClientFactory {
