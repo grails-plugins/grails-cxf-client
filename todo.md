@@ -8,5 +8,5 @@ This Grails 7 upgrade is still very much Work In Progress...
 -[ ] Update the documentation
 -[ ] The documentation mentions a grails command and a gradle task, they don't seem to work
   -[ ] `grails wsdl-to-java`
-  -[ ] `gradle wsdlToJava`
+  -[ ] `./gradlew wsdlToJava`
 -[ ] etc. etc. ...
