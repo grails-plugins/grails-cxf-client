@@ -2,11 +2,11 @@
 
 This Grails 7 upgrade is still very much Work In Progress...
 
--[ ] The Java classes in `src/integration-test/java/net/webservicex/`should be generated dynamically from the WSDL file
--[ ] Enable the integration test `StockQuoteClientSpec` (probably failing due to missing configuration...)
--[ ] The plugin can't be published at the moment (the previous published to Bintray which has been [shut down](https://jfrog.com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/))
--[ ] Update the documentation
--[ ] The documentation mentions a grails command and a gradle task, they don't seem to work
-  -[ ] `grails wsdl-to-java`
-  -[ ] `./gradlew wsdlToJava`
--[ ] etc. etc. ...
+- [ ] The Java classes in `src/integration-test/java/net/webservicex/`should be generated dynamically from the WSDL file
+- [ ] Enable the integration test `StockQuoteClientSpec` (probably failing due to missing configuration...)
+- [ ] The plugin can't be published at the moment (the previous published to Bintray which has been [shut down](https://jfrog.com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/))
+- [ ] Update the documentation
+- [ ] The documentation mentions a grails command and a gradle task, they don't seem to work
+  - [ ] `grails wsdl-to-java`
+  - [ ] `./gradlew wsdlToJava`
+- [ ] etc. etc. ...
