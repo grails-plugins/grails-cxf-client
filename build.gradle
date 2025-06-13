@@ -19,6 +19,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id "org.grails.grails-plugin" version "$grailsVersion"
+    id "com.github.ben-manes.versions" version "$benManesVersion"
 }
 
 // TODO version...
