@@ -74,3 +74,11 @@ jar {
     exclude 'org/grails/cxf/test/**',
             'net/webservicex/**'
 }
+
+publishing {
+    publications {
+        library(MavenPublication) {
+            from components.java
+        }
+    }
+}
