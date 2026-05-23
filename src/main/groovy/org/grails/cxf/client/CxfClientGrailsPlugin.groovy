@@ -13,7 +13,7 @@ class CxfClientGrailsPlugin extends Plugin {
 	private final Long DEFAULT_RECEIVE_TIMEOUT = 60000
 
 	// the version or versions of Grails the plugin is designed for
-	def grailsVersion = "3.0.0 > *"
+	def grailsVersion = "7.0.0 > *"
 	// resources that are excluded from plugin packaging
 	def pluginExcludes = [
 			'grails-app/conf/codenarc.groovy',
@@ -44,8 +44,8 @@ class CxfClientGrailsPlugin extends Plugin {
 	def description = '''\\
 Used for easily calling soap web services.  Provides wsdl2java grails target to easily generate code into src/java from configured cxf clients.  Ability to dynamically update endpoint at runtime.
 '''
-	def documentation = "https://github.com/Grails-Plugin-Consortium/grails-cxf-client"
-	def scm = [url: "https://github.com/Grails-Plugin-Consortium/grails-cxf-client"]
+	def documentation = "https://github.com/grails-plugins/grails-cxf-client"
+	def scm = [url: "https://github.com/grails-plugins/grails-cxf-client"]
 
 	Closure doWithSpring() {
 		{ ->
