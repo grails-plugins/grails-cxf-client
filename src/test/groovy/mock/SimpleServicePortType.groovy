@@ -1,11 +1,11 @@
 package mock
 
-import javax.jws.WebMethod
-import javax.jws.WebParam
-import javax.jws.WebResult
-import javax.jws.WebService
-import javax.xml.ws.RequestWrapper
-import javax.xml.ws.ResponseWrapper
+import jakarta.jws.WebMethod
+import jakarta.jws.WebParam
+import jakarta.jws.WebResult
+import jakarta.jws.WebService
+import jakarta.xml.ws.RequestWrapper
+import jakarta.xml.ws.ResponseWrapper
 
 @WebService(targetNamespace = 'http://mock.client.cxf/', name = 'SimpleServicePortType')
 interface SimpleServicePortType {

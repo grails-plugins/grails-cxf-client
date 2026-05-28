@@ -236,8 +236,8 @@ class WebServiceClientFactoryImplSpec extends Specification {
 		factory.interfaceMap.get("testService").clientPolicyMap.receiveTimeout == 0
 		factory.interfaceMap.get("testService").clientPolicyMap.contentType == 'text/xml; charset=UTF-8'
 		factory.interfaceMap.get("testService").handler != null
-		factory.interfaceMap.get("testService").handler.cxfProxy.h.client.currentRequestContext.get("org.apache.cxf.message.Message.ENDPOINT_ADDRESS") == "http://localhost:8080/cxf-client/old"
-		factory.interfaceMap.get("testService").handler.cxfProxy.h.client.currentRequestContext.get("one") == "one"
+		factory.interfaceMap.get("testService").handler.cxfProxy.requestContext.get("org.apache.cxf.message.Message.ENDPOINT_ADDRESS") == "http://localhost:8080/cxf-client/old"
+		factory.interfaceMap.get("testService").handler.cxfProxy.requestContext.get("one") == "one"
 		factory.interfaceMap.get("testService").requestContext.get("one") == "one"
 		!factory.interfaceMap.get("testService").tlsClientParameters
 		!factory.interfaceMap.get("testService").authorizationPolicy
@@ -261,7 +261,7 @@ class WebServiceClientFactoryImplSpec extends Specification {
 		factory.interfaceMap.get("testService").clientPolicyMap.contentType == 'text/xml; charset=UTF-8'
 		!factory.interfaceMap.get("testService").proxyFactoryBindingId
 		factory.interfaceMap.get("testService").handler != null
-		factory.interfaceMap.get("testService").handler.cxfProxy.h.client.currentRequestContext.get("org.apache.cxf.message.Message.ENDPOINT_ADDRESS") == "http://localhost:8080/cxf-client/new"
+		factory.interfaceMap.get("testService").handler.cxfProxy.requestContext.get("org.apache.cxf.message.Message.ENDPOINT_ADDRESS") == "http://localhost:8080/cxf-client/new"
 		!factory.interfaceMap.get("testService").tlsClientParameters
 		!factory.interfaceMap.get("testService").mtomEnabled
 		!factory.interfaceMap.get("testService").authorizationPolicy
@@ -301,7 +301,7 @@ class WebServiceClientFactoryImplSpec extends Specification {
 		!factory.interfaceMap.get("testService").secureSocketProtocol
 		!factory.interfaceMap.get("testService").tlsClientParameters
 		factory.interfaceMap.get("testService").handler != null
-		factory.interfaceMap.get("testService").handler.cxfProxy.h.client.currentRequestContext.get("org.apache.cxf.message.Message.ENDPOINT_ADDRESS") == "http://localhost:8080/cxf-client/old"
+		factory.interfaceMap.get("testService").handler.cxfProxy.requestContext.get("org.apache.cxf.message.Message.ENDPOINT_ADDRESS") == "http://localhost:8080/cxf-client/old"
 
 		when: "change the url to something new using invalid name"
 		factory.updateServiceEndpointAddress("unknownService", "http://localhost:8080/cxf-client/new")
@@ -331,7 +331,7 @@ class WebServiceClientFactoryImplSpec extends Specification {
 		!factory.interfaceMap.get("testService").secureSocketProtocol
 		!factory.interfaceMap.get("testService").tlsClientParameters
 		factory.interfaceMap.get("testService").handler != null
-		factory.interfaceMap.get("testService").handler.cxfProxy.h.client.currentRequestContext.get("org.apache.cxf.message.Message.ENDPOINT_ADDRESS") == "http://localhost:8080/cxf-client/old"
+		factory.interfaceMap.get("testService").handler.cxfProxy.requestContext.get("org.apache.cxf.message.Message.ENDPOINT_ADDRESS") == "http://localhost:8080/cxf-client/old"
 	}
 
 	def "create web service client using factory method and change url on empty name"() {
@@ -367,7 +367,7 @@ class WebServiceClientFactoryImplSpec extends Specification {
 		!factory.interfaceMap.get("testService").secureSocketProtocol
 		!factory.interfaceMap.get("testService").tlsClientParameters
 		factory.interfaceMap.get("testService").handler != null
-		factory.interfaceMap.get("testService").handler.cxfProxy.h.client.currentRequestContext.get("org.apache.cxf.message.Message.ENDPOINT_ADDRESS") == "http://localhost:8080/cxf-client/old"
+		factory.interfaceMap.get("testService").handler.cxfProxy.requestContext.get("org.apache.cxf.message.Message.ENDPOINT_ADDRESS") == "http://localhost:8080/cxf-client/old"
 
 		when: "change the url to something new using invalid name"
 		factory.updateServiceEndpointAddress('', "http://localhost:8080/cxf-client/new")
@@ -397,7 +397,7 @@ class WebServiceClientFactoryImplSpec extends Specification {
 		!factory.interfaceMap.get("testService").secureSocketProtocol
 		!factory.interfaceMap.get("testService").tlsClientParameters
 		factory.interfaceMap.get("testService").handler != null
-		factory.interfaceMap.get("testService").handler.cxfProxy.h.client.currentRequestContext.get("org.apache.cxf.message.Message.ENDPOINT_ADDRESS") == "http://localhost:8080/cxf-client/old"
+		factory.interfaceMap.get("testService").handler.cxfProxy.requestContext.get("org.apache.cxf.message.Message.ENDPOINT_ADDRESS") == "http://localhost:8080/cxf-client/old"
 	}
 
 	def "create web service client using factory method and retrieve url"() {
@@ -455,6 +455,7 @@ class WebServiceClientFactoryImplSpec extends Specification {
 		factory.interfaceMap.get("testService").tlsClientParameters.cipherSuitesFilter.include == ['.*_EXPORT_.*', '.*_EXPORT1024_.*']
 		factory.interfaceMap.get("testService").tlsClientParameters.cipherSuitesFilter.exclude == ['.*_DH_anon_.*']
 		factory.interfaceMap.get("testService").handler != null
-		factory.interfaceMap.get("testService").handler.cxfProxy.h.client.currentRequestContext.get("org.apache.cxf.message.Message.ENDPOINT_ADDRESS") == "http://localhost:8080/cxf-client/old"
+		factory.interfaceMap.get("testService").handler.cxfProxy.requestContext.get("org.apache.cxf.message.Message.ENDPOINT_ADDRESS") == "http://localhost:8080/cxf-client/old"
 	}
+
 }
