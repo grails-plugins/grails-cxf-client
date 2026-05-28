@@ -1,6 +1,6 @@
 <a name="Top"></a>
 
-CXF CLIENT
+🧩 Grails CXF Client Plugin
 ======
 
 * <a href="#Introduction">Introduction</a>
@@ -27,20 +27,15 @@ CXF CLIENT
 * <a href="#License">License</a>
 
 <a name="Introduction"></a>
-INTRODUCTION
----------------
+## Introduction
 
-There are a few different plugins for consuming SOAP web services with grails, but none currently deal with the issue of caching port references.  The ws-client plugin works, but its limitations are in how it creates and consumes the wsdl.  It relies on real time creation of proxy classes and services which can be very processor and memory (time) consuming with a large or complex service contract.  We need a way to speed up service invocation so this plugin was created to facilitate that need when consuming SOAP services using cxf.
+There are a few different plugins for consuming SOAP web services with [Apache Grails](https://grails.apache.org/), but none currently deal with the issue of caching port references.  The ws-client plugin works, but its limitations are in how it creates and consumes the wsdl.  It relies on real time creation of proxy classes and services which can be very processor and memory (time) consuming with a large or complex service contract.  We need a way to speed up service invocation so this plugin was created to facilitate that need when consuming SOAP services using cxf.
 
-The Cxf Client plugin will allow you to use existing (or new) apache cxf wsdl2java generated content and cache the port reference to speed up your soap service end point invocations through an easy configuration driven mechanism.
+The Cxf Client plugin will allow you to use existing (or new) [Apache CXF](https://cxf.apache.org/) wsdl2java generated content and cache the port reference to speed up your soap service end point invocations through an easy configuration driven mechanism.
 
-<p align="right"><a href="#Top">Top</a></p>
-<a name="Script"></a>
+## WsdlToJava Command
 
-WsdlToJava Command
----------------
-
-This plugin provides a convenient way to run wsdl2java as a grails run target in your project.
+This plugin provides a convenient way to run wsdl2java as a Grails run target in your project.
 
 You will need to put this plugin as a standard dependency AND a classpath dependency as follows
 
@@ -52,7 +47,8 @@ buildscript {
     repositories {
         mavenLocal()
         maven { url "https://repo.grails.org/grails/core" }
-        maven { url "https://dl.bintray.com/ctoestreich/grails-plugins" } //Required until grails repo is fixed
+        //Required until grails repo is fixed TODO this is not relevant any more...
+        maven { url "https://dl.bintray.com/ctoestreich/grails-plugins" }
     }
     dependencies {
         //other stuff
@@ -66,7 +62,7 @@ dependencies {
 }
 ```
 
-First point the configured clients to a wsdl (either locally or remotely).  This is done by adding the [wsdl] node to the client config as following:
+First point the configured clients to a WSDL (either locally or remotely).  This is done by adding the [wsdl] node to the client config as following:
 
 ```groovy
 cxf {
@@ -279,8 +275,7 @@ The following will also work
 <p align="right"><a href="#Top">Top</a></p>
 <a name="Manually"></a>
 
-WsdlToJava MANUALLY
-----------------
+## WsdlToJava Manually
 
 If you already have a wsdl2java generated object graph and client proxy you can skip this section.
 
@@ -306,8 +301,7 @@ Note: These could be put in the same jar since the namespace I am using is diffe
 <p align="right"><a href="#Top">Top</a></p>
 <a name="Plugin"></a>
 
-PLUGIN CONFIGURATION
-----------------
+## Plugin Configuration
 
 To wire up the plugin simple install the plugin via:
 
@@ -315,7 +309,7 @@ To wire up the plugin simple install the plugin via:
 
 or from the source code you could also package and install from a zip.
 
-Once the plugin is installed and you have your jaxb objects and cxf client port interface in your path (lib or src), you need to add the following to the Config.groovy of your project:
+Once the plugin is installed, and you have your jaxb objects and cxf client port interface in your path (lib or src), you need to add the following to the Config.groovy of your project:
 
     cxf:
         client:
@@ -357,12 +351,12 @@ Once the plugin is installed and you have your jaxb objects and cxf client port 
 Config used at runtime to invoke service.
 
 <table>
-<tr><td><b>Property</b></td><td><b>Description</b></td><td>Required</b></td></tr>
+<tr><td><b>Property</b></td><td><b>Description</b></td><td><b>Required</b></td></tr>
 <tr><td>beanName</td><td>This can be any name you would like, but should be unique.  This will be the name of the bean the plugin will auto wire and that you will refer to the bean from your service/controller/etc.</td><td><b>Yes</b></td></tr>
 <tr><td>clientInterface</td><td>Package name and object name of the wsdl2java generated port interface.</td><td><b>Yes</b></td></tr>
 <tr><td>serviceEndpointAddress</td><td>Url of the service to call.  Can refer to env specific url as in belows example.</td><td><b>Yes</b></td></tr>
-<tr><td>username</td><td>Username to pass along with request in wss4j interceptor when secured is true. (default: "")</td><td>No</td></tr>
-<tr><td>password</td><td>Password to pass along with request in wss4j interceptor when secured is true. (default: "")</td><td>No</td></tr>
+<tr><td>username</td><td>Username to pass along with request in WSS4J interceptor when secured is true. (default: "")</td><td>No</td></tr>
+<tr><td>password</td><td>Password to pass along with request in WSS4J interceptor when secured is true. (default: "")</td><td>No</td></tr>
 <tr><td>securityInterceptor</td><td>Provide a single bean name as a string to wire in as an out interceptor for apache cxf.  If you provide a name for an interceptor, it will be implied that secured=true.  If you require the default wss4j interceptor you will not need to set this property, simply set the secured=true and the username and password properties.  If you set this to a value then the username and password fields will be ignored as it is expected that you will configure any required property injection in your resources.groovy file.  You may also provide your custom security
 interceptor in the outInterceptors property as well.  You would still be required to set secured=true.  This is here as a convenience to any existing configured clients that do not wish to switch to using the newer outInterceptors property.  See below for examples (default: "")</td><td>No</td></tr>
 <tr><td>inInterceptors</td><td>Provide a bean name or list of bean names in "name", "name, name" or ["name","name"] format to wire in as an in interceptor for apache cxf.  If you set it is expected that you will configure the beans in the resources.groovy file.  See below for examples (default: [])</td><td>No</td></tr>
@@ -375,8 +369,8 @@ interceptor in the outInterceptors property as well.  You would still be require
 <tr><td>secured</td><td>If true will set the cxf client params to use username and password values using WSS4J. (default: false)</td><td>No</td></tr>
 <tr><td>allowChunking</td><td>If true will set the HTTPClientPolicy allowChunking for the clients proxy to true. (default: false)</td><td>No</td></tr>
 <tr><td>contentType</td><td>Allows user to override the content type of the http policy default of 'text/xml; charset=UTF8'.  Might want to set to "application/soap+xml; charset=UTF-8" for example.</td><td>No</td></tr>
-<tr><td>conection</td><td>Allows user to override the connection type of the http policy default of 'ConnectionType.CLOSE'.  Can attempt to reuse connections via ConnectionType.KEEP_ALIVE</td><td>No</td></tr>
-<tr><td>httpClientPolicy</td><td>Instead of using the separate timeout, chunking, etc values you can create your own HTTPClientPolicy bean in resources.groovy and pass the name of the bean here. <B>This will override the connectionTimeout, receiveTimeout and allowChunking values.</b> (default: null)</td><td>No</td></tr>
+<tr><td>connection</td><td>Allows user to override the connection type of the http policy default of 'ConnectionType.CLOSE'.  Can attempt to reuse connections via ConnectionType.KEEP_ALIVE</td><td>No</td></tr>
+<tr><td>httpClientPolicy</td><td>Instead of using the separate timeout, chunking, etc. values you can create your own HTTPClientPolicy bean in resources.groovy and pass the name of the bean here. <B>This will override the connectionTimeout, receiveTimeout and allowChunking values.</b> (default: null)</td><td>No</td></tr>
 <tr><td>authorizationPolicy</td><td>Name of a bean in resources.groovy of type AuthorizationPolicy that will be used in the httpConduit.</b> (default: null)</td><td>No</td></tr>
 <tr><td>proxyFactoryBindingId</td><td>The URI, or ID, of the message binding for the endpoint to use. For SOAP the binding URI(ID) is specified by the JAX-WS specification. For other message bindings the URI is the namespace of the WSDL extensions used to specify the binding.  If you would like to change the binding (to use soap12 for example) set this value to "http://schemas.xmlsoap.org/wsdl/soap12/". (default: "")</td><td>No</td></tr>
 <tr><td>mtomEnabled</td><td>SOAP Message Transmission Optimization Mechanism (MTOM) specifies an optimized method for sending binary data as part of a SOAP message. Unlike SOAP with Attachments, MTOM requires the use of XML-binary Optimized Packaging (XOP) packages for transmitting binary data. Using MTOM to send binary data does not require you to fully define the MIME Multipart/Related message as part of the SOAP binding. (default: false)</td><td>No</td></tr>
@@ -391,16 +385,14 @@ interceptor in the outInterceptors property as well.  You would still be require
 Config items used by wsdl2java.
 
 <table>
-<tr><td><b>Property</b></td><td><b>Description</b></td><td>Required</b></td></tr>
+<tr><td><b>Property</b></td><td><b>Description</b></td><td><b>Required</b></td></tr>
 <tr><td>wsdl</td><td>Location of the wsdl either locally relative to project home dir or a url. (default: "")</td><td>No</td></tr>
-<tr><td>wsdlArgs</td><td>A custom list of args to pass in seperated by space such as ["-autoNameResolution","-validate"].  This can also be a single string value such as "-autoNameResolution", but when using multiple custom params you must specify each in a list ["-one val","-two","-three val"] due to limitations with ant. (default: "")</td><td>No</td></tr>
+<tr><td>wsdlArgs</td><td>A custom list of args to pass in separated by space such as ["-autoNameResolution","-validate"].  This can also be a single string value such as "-autoNameResolution", but when using multiple custom params you must specify each in a list ["-one val","-two","-three val"] due to limitations with ant. (default: "")</td><td>No</td></tr>
 <tr><td>namespace</td><td>Specifies package names to use for the generated code. (default: "use wsdl provided schema")</td><td>No</td></tr>
 <tr><td>client</td><td>Used to tell wsdl2java to output sample clients, usually not needed. (default: false)</td><td>No</td></tr>
 <tr><td>bindingFile</td><td>Path of binding file to pass to wsdl2java. (default: "")</td><td>No</td></tr>
-<tr><td>outputDir</td><td>Password to pass along with request in wss4j interceptor when secured is true. (default: "src/java")</td><td>No</td></tr>
+<tr><td>outputDir</td><td>Password to pass along with request in WSS4J interceptor when secured is true. (default: "src/java")</td><td>No</td></tr>
 </table>
-
-
 
 You simply refer to your client beans from a controller/service/taglib like the following:
 
@@ -424,15 +416,14 @@ _**NOTE:** You should type the beans with the cxf port interface type so as to g
 <p align="right"><a href="#Top">Top</a></p>
 <a name="Mime"></a>
 
-MIME ATTACHMENTS
-----------------
+## Mime Attachments
+
 Functionality was recently added by Kyle Dickerson to support mime type attachements in a response.  To do this you will need to set both the _wsdl_ and _wsdlServiceName_ properties.  This is done so that cxf will be able to resolve correctly the attachment data against the wsdl.  If you fail to set these you may cause an IndexOutOfBounds thrown from cxf.  You may need to define _wsdlEndpointName_ as well.
 
 <p align="right"><a href="#Top">Top</a></p>
 <a name="Security"></a>
 
-CUSTOM SECURITY INTERCEPTORS
----------------
+## Custom Security Interceptors
 
 As a convenience to the user I created an interface to inherit from that allows you to customize the specifics of the interceptor without having to inherit all the contract methods for the cxf interceptors.  You simply have to inherit from CxfClientInterceptor in the org.grails.cxf.client.security package.  Here is the custom interceptor I created for the demo project.
 
@@ -508,12 +499,12 @@ cxf:
 <p align="right"><a href="#Top">Top</a></p>
 <a name="In"></a>
 
-CUSTOM IN INTERCEPTORS
----------------
+## Custom In Interceptors
+
 
 You can wire in your own custom in interceptors by adding the property inInterceptors to the configured client.  In this example I have chosen to wire in my own in logging interceptors and have disabled the default logging interceptors by setting enableDefaultLoggingInterceptors = false.
 
-In the resources.groovy define our bean wiring.
+In the `resources.groovy` define our bean wiring.
 
 ```groovy
 customLoggingInInterceptor(CustomLoggingInInterceptor) {
@@ -529,7 +520,7 @@ verboseLoggingInInterceptor(VerboseCustomLoggingInInterceptor) {
 }
 ```
 
-In the Config.groovy cxf { client { ... } } block define a webservice client and provide the interceptor bean name(s).
+In the `Config.groovy` cxf { client { ... } } block define a webservice client and provide the interceptor bean name(s).
 
 ```yaml
 cxf:
@@ -604,8 +595,8 @@ info 'blah.blah.blah' //whatever package your custom interceptors are in
 <p align="right"><a href="#Top">Top</a></p>
 <a name="Out"></a>
 
-CUSTOM OUT INTERCEPTORS
----------------
+## Custom Out Interceptors
+
 You can wire in your own custom out interceptors by adding the property outInterceptors to the configured client.  In this example I have chosen to wire in my own out logging interceptors.
 
 ```yaml
@@ -679,8 +670,7 @@ info 'blah.blah.blah' //whatever package your custom interceptors are in
 <p align="right"><a href="#Top">Top</a></p>
 <a name="InFault"></a>
 
-CUSTOM IN FAULT INTERCEPTORS
----------------
+## Custom In Fault Interceptors
 
 You can wire in your own custom in fault interceptors by adding the property inFaultInterceptors to the configured client.  Example coming soon, but should be similar to the earlier two examples.
 
@@ -693,12 +683,10 @@ info 'blah.blah.blah' //whatever package your custom interceptors are in
 //debug 'org.apache.cxf.interceptor' //choose appropriate level
 ```
 
-
 <p align="right"><a href="#Top">Top</a></p>
 <a name="OutFault"></a>
 
-CUSTOM OUT FAULT INTERCEPTORS
----------------
+## Custom Out Fault Interceptors
 
 You can wire in your own custom out fault interceptors by adding the property outFaultInterceptors to the configured client.  Example coming soon, but should be similar to the earlier two examples.
 
@@ -714,8 +702,7 @@ info 'blah.blah.blah' //whatever package your custom interceptors are in
 <p align="right"><a href="#Top">Top</a></p>
 <a name="Custom"></a>
 
-CUSTOM HTTP CLIENT POLICY
----------------
+## Custom HTTP Client Policy
 
 If you simply need to set the connectionTimeout, receiveTimeout, or allowChunking you may use the three provided params to accomplish this.  If you require more fine grained control of the HTTPClientPolicy you can create a custom bean in the resources.groovy and tell your cxf client to use it via the code below.
 
@@ -755,8 +742,7 @@ Note: If you incorrectly refer to your new beans name (spelling, etc) you will g
 <p align="right"><a href="#Top">Top</a></p>
 <a name="CustomAuth"></a>
 
-CUSTOM AUTHORIZATION POLICY
----------------
+## Custom Authorization Policy
 
 If you simply need to set Authorization Policy you can create a custom bean in the resources.groovy and tell your cxf client to use it via the code below.
 resources.groovy
@@ -788,8 +774,8 @@ Note: If you incorrectly refer to your new beans name (spelling, etc) you will g
 <p align="right"><a href="#Top">Top</a></p>
 <a name="Exceptions"></a>
 
-DEALING WITH EXCEPTIONS
----------------
+## Dealing With Exceptions
+
 As of version 1.2.9 of the plugin, I have fixed the issue so your services with checked exceptions defined will not throw them as designed.  Given some service that throws an exception (ComplexContrivedException_Exception in our case) as follows:
 
 ```java
@@ -828,8 +814,7 @@ try {
 <p align="right"><a href="#Top">Top</a></p>
 <a name="Ssl"></a>
 
-SETTING SECURE SOCKET PROTOCOL
----------------
+## Setting Secure Socket Protocol
 
 **TODO: Not supported in grails 3 yet!**
 
@@ -878,15 +863,15 @@ Not all features for http conduit are supported.  You can read more about condui
 <p align="right"><a href="#Top">Top</a></p>
 <a name="Beans"></a>
 
-USING CLIENT BEANS ANYWHERE
----------------
-If you require useage of the web service clients you can access them anywhere by accessing them by name.  The name of the bean will match the name of the configured client in your Config.groovy.
+## Using Client Beans Anywhere
+
+If you require usage of the web service clients you can access them anywhere by accessing them by name.  The name of the bean will match the name of the configured client in your Config.groovy.
 
 <p align="right"><a href="#Top">Top</a></p>
 <a name="Endpoints"></a>
 
-RETRIEVING AND UPDATING ENDPOINTS
----------------
+## Retrieving And Updating Endpoints
+
 The service endpoint address for any given service can be retrieved and updated at runtime using the WebserviceClientFactory interface.
 
 I have synchronized the access to update address method to ensure thread safe access to the underlying service map.  The method signature is as follows:
@@ -916,8 +901,7 @@ If no service endpoint is found matching the `serviceName` or if an empty name i
 <p align="right"><a href="#Top">Top</a></p>
 <a name="console"></a>
 
-ENABLING LOGGING OF SOAP MESSAGES
----------------
+## Enabling Logging Of Soap Messages
 
 **Todo: Update for grails 3**
 
@@ -939,8 +923,7 @@ log4j {
 <p align="right"><a href="#Top">Top</a></p>
 <a name="Demo"></a>
 
-DEMO PROJECT
----------------
+## Demo Project
 
 A grails 3 demo project that includes both a sample service and usage of the cxf-client plugin can be found at <https://github.com/Grails-Plugin-Consortium/grails-cxf-client-demo>
 
@@ -949,10 +932,9 @@ I have also included the full code on how to inject a custom security intercepto
 <p align="right"><a href="#Top">Top</a></p>
 <a name="Issues"></a>
 
-ISSUES
----------------
+## Issues
 
-To submit an issue please use <https://github.com/Grails-Plugin-Consortium/grails-cxf-client/issues>.
+To submit an issue please use <https://github.com/grails-plugins/grails-cxf-client/issues>.
 
 Currently there is an issue with pointing to a secure endpoint and running the wsdl2java script.  If you get an error message like
 
@@ -991,14 +973,14 @@ compile("${cxfGroup}:cxf-tools-wsdlto-databinding-jaxb:${cxfVersion}") {
 <p align="right"><a href="#Top">Top</a></p>
 <a name="Change"></a>
 
-CHANGE LOG
----------------
+## Change Log
+
 * v 3.0.6
 	* Name changed to simply `cxf-client` from `grails-cxf-client`
 
 
 * v 3.0.4
-	* Adding support for ConnectionType (eg. KEEP_ALIVE and CLOSE) on the http connection
+	* Adding support for ConnectionType (e.g. KEEP_ALIVE and CLOSE) on the http connection
 
 
 * v 3.0.1-3.0.3
@@ -1017,7 +999,7 @@ CHANGE LOG
 
 
 * v 2.1
-    * Moving to CXF 3.0.4 in preparation for grails 3 move
+    * Moving to CXF 3.0.4 in preparation for Grails 3 move
 
 
 * v 2.0.3
@@ -1031,9 +1013,9 @@ CHANGE LOG
 
 * v 2.0
 	* Moving to cxf 2.6.6
-	* Rabasing support for grails 2.2+
-	* Update grails version
-    * Removed spock plugin (now bundled with grails)
+	* Rebasing support for Grails 2.2+
+	* Update Grails version
+    * Removed Spock plugin (now bundled with Grails)
 
 
 * v 1.6.2
@@ -1075,7 +1057,7 @@ CHANGE LOG
 
 * v1.4.5
     * Reverted the use of @Commons to make app compatible with 1.3.0+
-    * Added parameter for secureSocketProtocol to specify protocol.  Constants were added for this in CxfClientConstants class.
+    * Added parameter for secureSocketProtocol to specify protocol.  Constants were added for this in `CxfClientConstants` class.
 
 
 * v1.4.4
@@ -1089,7 +1071,7 @@ CHANGE LOG
 
 * v1.3.0
     * Adding ability to update endpoint during runtime if needed - Thanks to Laura Helde for finalizing this work.
-    * Adding reponse mime attachement support - Thanks to Kyle Dickerson for helping with this issue.
+    * Adding response mime attachement support - Thanks to Kyle Dickerson for helping with this issue.
 
 
 * v1.2.9
@@ -1109,22 +1091,20 @@ CHANGE LOG
 
 
 * v1.2.6
-    * Ability to set connectionTimeout and recieveTimeout for the client proxy
+    * Ability to set connectionTimeout and `recieveTimeout` for the client proxy
 
 
 <p align="right"><a href="#Top">Top</a></p>
 <a name="Future"></a>
 
-FUTURE REVISIONS
----------------
+## Future Revisions
 
 Currently taking submissions for improvements.
 
 <p align="right"><a href="#Top">Top</a></p>
 <a name="License"></a>
 
-LICENSE
----------------
+## License
 
 Copyright 2012 Christian Oestreich
 
