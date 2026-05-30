@@ -3,6 +3,25 @@
 🧩 Grails CXF Client Plugin
 ======
 
+## 🚀 Getting Started
+### Grails 7
+Not yet released, you will have to do a `./gradlew publishToMavenLocal` first, and then add the dependency:
+
+```groovy
+implementation 'org.grails.plugins:cxf-client:5.0.0-RC1'
+```
+
+### Grails 5, 6
+```groovy
+compile 'org.grails.plugins:cxf-client:3.0.7'
+```
+
+### Grails 3, 4
+```groovy
+compile 'org.grails.plugins:cxf-client:3.0.7'
+```
+## 📖 Documentation
+
 * <a href="#Introduction">Introduction</a>
 * <a href="#Script">WsdlTojava Command</a>
 * <a href="#Manually">WsdlTojava Manually</a>
@@ -309,44 +328,46 @@ To wire up the plugin simple install the plugin via:
 
 or from the source code you could also package and install from a zip.
 
-Once the plugin is installed, and you have your jaxb objects and cxf client port interface in your path (lib or src), you need to add the following to the Config.groovy of your project:
+Once the plugin is installed, and you have your jaxb objects and cxf client port interface in your path (lib or src), you need to add the following to the `Config.groovy` of your project:
 
-    cxf:
-        client:
-            [beanName]:
-                clientInterface: [package and name of wsdl2java -client generated port interface class]
-                serviceEndpointAddress: [url for the service]
-                username: [username] //optional - used when secured is true - currently wss4j interceptor
-                password: [password] //optional - used when secured is true - currently wss4j interceptor
-                securityInterceptor: [text name of custom bean to use] //optional - defaults to wss4j interceptor
-                inInterceptors: [list of cxf in interceptors to add to the client] //optional - defaults to []
-                outInterceptors: [list of cxf out interceptors to add to the client] //optional - defaults to []
-                inFaultInterceptors: [list of cxf in fault interceptors to add to the client] //optional - defaults to []
-                outFaultInterceptors: [list of cxf out fault interceptors to add to the client] //optional - defaults to []
-                enableDefaultLoggingInterceptors: [turn on or off default in/out logging] //optional - defaults to true
-                secured: [true or false] //optional - defaults to false
-                connectionTimeout: [Number of milliseconds to wait for connection] //optional - Defaults to 60000 (use 0 to wait infinitely)
-                receiveTimeout: [Number of milliseconds to wait to receive a response] //optional - Defaults to 30000 (use 0 to wait infinitely)
-                allowChunking: [true or false] //optional - defaults to false
-                contentType: [String value of http content type] - defaults to 'text/xml; charset=UTF8'
-                connection: [Enum of ConnectionType (ConnectionType.CLOSE, ConectionType.KEEP_ALIVE) for type of connection] - defaults to ConnectionType.CLOSE
-                httpClientPolicy: [text name of custom bean to use] //optional - defaults to null
-                authorizationPolicy: [text name of custom bean to use] //optional - defaults to null
-                proxyFactoryBindingId: [binding id uri if required] //optional - defaults to null
-                mtomEnabled: [flag to enable mtom] //optional - defaults to false
-                secureSocketProtocol: [socket protocol to use for secure service] //optional - defaults to null
-                wsdlServiceName: [set to enable mime type mapping] //optional - defaults to null
-                wsdlEndpointName: [may be needed for correct wsdl initialization] //optional - defaults to null
-                requestContext: [Setting a Request Context Property on the Client Side] //optional - defaults to [:]
-                tlsClientParameters: [conduit settings for secure services] //optional - defaults to [:]
+```groovy
+cxf:
+    client:
+        [beanName]:
+            clientInterface: [package and name of wsdl2java -client generated port interface class]
+            serviceEndpointAddress: [url for the service]
+            username: [username] //optional - used when secured is true - currently wss4j interceptor
+            password: [password] //optional - used when secured is true - currently wss4j interceptor
+            securityInterceptor: [text name of custom bean to use] //optional - defaults to wss4j interceptor
+            inInterceptors: [list of cxf in interceptors to add to the client] //optional - defaults to []
+            outInterceptors: [list of cxf out interceptors to add to the client] //optional - defaults to []
+            inFaultInterceptors: [list of cxf in fault interceptors to add to the client] //optional - defaults to []
+            outFaultInterceptors: [list of cxf out fault interceptors to add to the client] //optional - defaults to []
+            enableDefaultLoggingInterceptors: [turn on or off default in/out logging] //optional - defaults to true
+            secured: [true or false] //optional - defaults to false
+            connectionTimeout: [Number of milliseconds to wait for connection] //optional - Defaults to 60000 (use 0 to wait infinitely)
+            receiveTimeout: [Number of milliseconds to wait to receive a response] //optional - Defaults to 30000 (use 0 to wait infinitely)
+            allowChunking: [true or false] //optional - defaults to false
+            contentType: [String value of http content type] - defaults to 'text/xml; charset=UTF8'
+            connection: [Enum of ConnectionType (ConnectionType.CLOSE, ConectionType.KEEP_ALIVE) for type of connection] - defaults to ConnectionType.CLOSE
+            httpClientPolicy: [text name of custom bean to use] //optional - defaults to null
+            authorizationPolicy: [text name of custom bean to use] //optional - defaults to null
+            proxyFactoryBindingId: [binding id uri if required] //optional - defaults to null
+            mtomEnabled: [flag to enable mtom] //optional - defaults to false
+            secureSocketProtocol: [socket protocol to use for secure service] //optional - defaults to null
+            wsdlServiceName: [set to enable mime type mapping] //optional - defaults to null
+            wsdlEndpointName: [may be needed for correct wsdl initialization] //optional - defaults to null
+            requestContext: [Setting a Request Context Property on the Client Side] //optional - defaults to [:]
+            tlsClientParameters: [conduit settings for secure services] //optional - defaults to [:]
 
-                //wsdl config
-                wsdl: [location of the wsdl either locally relative to project home dir or a url] //optional - only used by wsdl2java script
-                wsdlArgs: [custom list of args to pass in seperated by space such as ["-autoNameResolution", "-validate"]] //optional - only used by wsdl2java script
-                namespace: [package name to use for generated classes] //optional - uses packages from wsdl if not provided
-                client: [true or false] //optional - used to tell wsdl2java to output sample clients, usually not needed - defaults to false
-                bindingFile: [Specifies JAXWS or JAXB binding file or XMLBeans context file] //optional
-                outputDir: [location to output generated files] //optional - defaults to src/java
+            //wsdl config
+            wsdl: [location of the wsdl either locally relative to project home dir or a url] //optional - only used by wsdl2java script
+            wsdlArgs: [custom list of args to pass in seperated by space such as ["-autoNameResolution", "-validate"]] //optional - only used by wsdl2java script
+            namespace: [package name to use for generated classes] //optional - uses packages from wsdl if not provided
+            client: [true or false] //optional - used to tell wsdl2java to output sample clients, usually not needed - defaults to false
+            bindingFile: [Specifies JAXWS or JAXB binding file or XMLBeans context file] //optional
+            outputDir: [location to output generated files] //optional - defaults to src/java
+```
 
 Config used at runtime to invoke service.
 
