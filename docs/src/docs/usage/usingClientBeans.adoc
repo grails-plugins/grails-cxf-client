@@ -1,0 +1,57 @@
+[[usingClientBeans]]
+=== Using Client Beans Anywhere
+
+If you require usage of the web service clients you can access them anywhere by name. The name of the bean will
+match the name of the configured client in your application config.
+
+[[endpoints]]
+=== Retrieving And Updating Endpoints
+
+The service endpoint address for any given service can be retrieved and updated at runtime using the
+`WebServiceClientFactory` interface.
+
+Access to the update-address method is synchronized to ensure thread safe access to the underlying service map.
+The method signature is as follows:
+
+[source,groovy]
+----
+@Synchronized void updateServiceEndpointAddress(String serviceName, String serviceEndpointAddress) throws UpdateServiceEndpointException
+----
+
+To retrieve an endpoint via code:
+
+[source,groovy]
+----
+WebServiceClientFactory webServiceClientFactory
+
+String endpointAddress = webServiceClientFactory.getServiceEndpointAddress('simpleServiceClient')
+----
+
+To update an endpoint:
+
+[source,groovy]
+----
+WebServiceClientFactory webServiceClientFactory
+
+webServiceClientFactory.updateServiceEndpointAddress('simpleServiceClient', 'http://www.changeme.com/services/newURL')
+----
+
+If no service endpoint is found matching the `serviceName`, or if an empty name is passed, an
+`UpdateServiceEndpointException` will be thrown. This gives concrete feedback of an endpoint update failure.
+
+[[loggingSoapMessages]]
+=== Enabling Logging Of Soap Messages
+
+If you would like to view the raw SOAP in the console/log files, add the following JVM startup param:
+
+[source]
+----
+-Dorg.apache.cxf.Logger=org.apache.cxf.common.logging.Log4jLogger
+----
+
+And enable it in your logging config:
+
+[source,groovy]
+----
+info 'org.apache.cxf' // debug, etc.
+----

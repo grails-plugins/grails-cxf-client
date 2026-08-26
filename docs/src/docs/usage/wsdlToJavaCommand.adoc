@@ -1,0 +1,213 @@
+[[wsdlToJavaCommand]]
+=== WsdlToJava Command
+
+This plugin provides a convenient way to run wsdl2java as a Grails application command in your project. It is
+implemented as an `ApplicationCommand`, invoked from your consuming application as either a Grails or a Gradle
+command.
+
+First point the configured clients to a WSDL (either locally or remotely). This is done by adding the `wsdl` node
+to the client config as follows:
+
+[source,yaml]
+----
+cxf:
+    client:
+        simpleServiceClient:
+            # used in wsdl2java
+            wsdl: docs/SimpleService.wsdl # only used for wsdl2java script target
+            namespace: cxf.client.demo.simple
+            client: false # defaults to false
+            bindingFile: grails-app/conf/bindings.xml
+            outputDir: src/main/java
+            allowChunking: true # false
+
+            # used for invoking service
+            clientInterface: cxf.client.demo.simple.SimpleServicePortType
+            serviceEndpointAddress: ${service.simple.url}
+
+        # Another example real service to use against the wsdl2java command
+        stockQuoteClient:
+            wsdl: http://www.webservicex.net/stockquote.asmx?WSDL
+
+            clientInterface: net.webservicex.StockQuoteSoap
+            serviceEndpointAddress: http://www.webservicex.net/stockquote.asmx
+----
+
+You have the ability to provide wsdl2java custom args. This is done through the `wsdlArgs` param. You may provide
+this in list format or, for a single param, in string format.
+
+[source,yaml]
+----
+cxf:
+    client:
+        simpleServiceClient:
+            wsdl: docs/SimpleService.wsdl # only used for wsdl2java script target
+            wsdlArgs:
+                - -autoNameResolution
+                - -validate
+            # wsdlArgs: -autoNameResolution # single param style
+            namespace: cxf.client.demo.simple
+            client: false
+            bindingFile: grails-app/conf/bindings.xml
+            outputDir: src/main/java
+
+            clientInterface: cxf.client.demo.simple.SimpleServicePortType
+            serviceEndpointAddress: ${service.simple.url}
+----
+
+You may need to use the interface rather than the port type to make your client work:
+
+[source,yaml]
+----
+clientInterface: cxf.client.demo.simple.SimpleInterface
+----
+
+The following is a more complete example of configured clients with interceptors and other features:
+
+[source,yaml]
+----
+cxf:
+    client:
+        simpleServiceClient:
+            wsdl: docs/SimpleService.wsdl
+            wsdlArgs: -autoNameResolution
+            clientInterface: cxf.client.demo.simple.SimpleServicePortType
+            serviceEndpointAddress: http://localhost:8080/services/simple
+            namespace: cxf.client.demo.simple
+            httpClientPolicy: customHttpClientPolicy
+        customSecureAuthorizationServiceClient:
+            wsdl: docs/AuthorizationService.wsdl
+            clientInterface: cxf.client.demo.authorization.AuthorizationServicePortType
+            serviceEndpointAddress: http://localhost:8080/services/authorization
+            namespace: cxf.client.demo.authorization
+            authorizationPolicy: customAuthorizationPolicy
+        simpleServiceInterceptorClient:
+            wsdl: docs/SimpleService.wsdl # only used for wsdl2java script target
+            clientInterface: cxf.client.demo.simple.SimpleServicePortType
+            serviceEndpointAddress: http://localhost:8080/services/simple
+            outInterceptors: customLoggingOutInterceptor # single item, comma separated list, or groovy list
+            inInterceptors:
+              - customLoggingInInterceptor
+              - verboseLoggingInInterceptor
+            enableDefaultLoggingInterceptors: false
+            namespace: cxf.client.demo.simple
+        complexServiceClient:
+            wsdl: docs/ComplexService.wsdl # only used for wsdl2java script target
+            clientInterface: cxf.client.demo.complex.ComplexServicePortType
+            serviceEndpointAddress: http://localhost:8080/services/complex
+            namespace: cxf.client.demo.complex
+            receiveTimeout: 120000 # 2min
+        insecureServiceClient:
+            wsdl: docs/SecureService.wsdl # only used for wsdl2java script target
+            namespace: cxf.client.demo.secure
+            clientInterface: cxf.client.demo.secure.SecureServicePortType
+            secured: false
+            serviceEndpointAddress: http://localhost:8080/services/secure
+        customSecureServiceClient:
+            wsdl: docs/SecureService.wsdl
+            namespace: cxf.client.demo.secure
+            clientInterface: cxf.client.demo.secure.SecureServicePortType
+            secured: true
+            securityInterceptor: myCustomerSecurityOutInterceptor
+            serviceEndpointAddress: http://localhost:8080/services/secure
+        customSecureServiceOutClient:
+            wsdl: docs/SecureService.wsdl # only used for wsdl2java script target
+            namespace: cxf.client.demo.secure
+            clientInterface: cxf.client.demo.secure.SecureServicePortType
+            secured: true
+            securityInterceptor: myCustomerSecurityOutInterceptor
+            outInterceptors: customLoggingOutInterceptor
+            inInterceptors:
+              - customLoggingInInterceptor
+              - verboseLoggingInInterceptor
+            enableDefaultLoggingInterceptors: true # true by default (redundant)
+            serviceEndpointAddress: http://localhost:8080/services/secure
+        secureServiceClient:
+            wsdl: docs/SecureService.wsdl # only used for wsdl2java script target
+            namespace: cxf.client.demo.secure
+            clientInterface: cxf.client.demo.secure.SecureServicePortType
+            secured: true
+            username: wsuser
+            password: password
+            serviceEndpointAddress: http://localhost:8080/services/secure
+        stockQuoteClient:
+            wsdl: http://www.webservicex.net/stockquote.asmx?WSDL
+            clientInterface: net.webservicex.StockQuoteSoap
+            serviceEndpointAddress: http://www.webservicex.net/stockquote.asmx
+            receiveTimeout: 120000 # 2min
+            connectionTimeout: 120000 # 2min
+----
+
+This references the following beans, which would be set up in your application's `resources.groovy`:
+
+[source,groovy]
+----
+import com.cxf.demo.fault.out.interceptor.*
+import com.cxf.demo.logging.CustomLoggingInInterceptor
+import com.cxf.demo.logging.CustomLoggingOutInterceptor
+import com.cxf.demo.logging.VerboseCustomLoggingInInterceptor
+import com.cxf.demo.security.CustomSecurityInterceptor
+import org.grails.cxf.client.security.DefaultSecurityOutInterceptor
+import org.apache.cxf.configuration.security.AuthorizationPolicy
+import org.apache.cxf.transports.http.configuration.HTTPClientPolicy
+import org.apache.cxf.transports.http.configuration.ConnectionType
+
+// Place your Spring DSL code here
+beans = {
+
+    myCustomInterceptor(CustomSecurityInterceptor)
+
+    myCustomerSecurityOutInterceptor(DefaultSecurityOutInterceptor) {
+        username = 'wsuser'
+        password = 'password'
+    }
+
+    customLoggingInInterceptor(CustomLoggingInInterceptor) {
+        name = "customLoggingInInterceptor"
+    }
+
+    customFaultOutInterceptorSetup(CustomFaultOutInterceptorSetup)
+    customFaultOutInterceptorPreLogical(CustomFaultOutInterceptorPreLogical)
+    customFaultOutInterceptorUserLogical(CustomFaultOutInterceptorUserLogical)
+    customFaultOutInterceptorPostLogical(CustomFaultOutInterceptorPostLogical)
+    customFaultOutInterceptorPrepareSend(CustomFaultOutInterceptorPrepareSend)
+    customFaultOutInterceptorPreStream(CustomFaultOutInterceptorPreStream)
+    customFaultOutInterceptorPreProtocol(CustomFaultOutInterceptorPreProtocol)
+    customFaultOutInterceptorWrite(CustomFaultOutInterceptorWrite)
+    customFaultOutInterceptorMarshal(CustomFaultOutInterceptorMarshal)
+    customFaultOutInterceptorPostProtocol(CustomFaultOutInterceptorPostProtocol)
+    customFaultOutInterceptorPostStream(CustomFaultOutInterceptorPostStream)
+    customFaultOutInterceptorSend(CustomFaultOutInterceptorSend)
+
+    verboseLoggingInInterceptor(VerboseCustomLoggingInInterceptor) {
+        name = "verboseLoggingInInterceptor"
+    }
+
+    customLoggingOutInterceptor(CustomLoggingOutInterceptor) {
+        name = "customLoggingOutInterceptor"
+    }
+
+    customHttpClientPolicy(HTTPClientPolicy) {
+        connectionTimeout = 30000
+        receiveTimeout = 60000
+        allowChunking = false
+        connection = ConnectionType.KEEP_ALIVE
+    }
+
+    customAuthorizationPolicy(AuthorizationPolicy) {
+        userName = 'wsuser'
+        password = 'secret'
+        authorizationType = 'Basic'
+    }
+}
+----
+
+NOTE: The `wsdl` node is only used by the wsdl2java command and is not used when wiring the beans at runtime.
+
+After adding the `wsdl` node you can run the following command to generate the CXF/JAXB classes into the
+`src/main/java` directory of your project:
+
+[source,bash]
+----
+./gradlew wsdlToJava
+----

@@ -1,0 +1,36 @@
+[[releaseNotes]]
+== Release Notes
+
+NOTE: Starting with the move onto the grails-plugin-template build, release notes for new versions are drafted
+automatically from merged pull requests — see the
+https://github.com/grails-plugins/grails-cxf-client/releases[GitHub releases] page. The history below is
+carried over from the plugin's original `readme.md` change log.
+
+* *3.0.6* - Name changed to simply `cxf-client` from `grails-cxf-client`.
+* *3.0.4* - Added support for `ConnectionType` (e.g. `KEEP_ALIVE` and `CLOSE`) on the http connection.
+* *3.0.1 - 3.0.3* - Minor bug fixes; renamed plugin to remove the G3 suffix; Grails 3.
+* *3.0.0* - Moved to CXF 3.1.x; Grails 3.
+* *2.1.1* - Moved to WSS4J 2.0.3, required for use with CXF 3+.
+* *2.1* - Moved to CXF 3.0.4 in preparation for the Grails 3 move.
+* *2.0.3* - Fixed soap12 support; added the `mtomEnabled` configuration flag.
+* *2.0.2* - Fixed an external properties timeout number format exception (int -> string cast).
+* *2.0* - Moved to CXF 2.6.6; rebased support for Grails 2.2+; removed the Spock plugin (now bundled with Grails).
+* *1.6.2* - Added `AuthorizationPolicy` support for clients.
+* *1.6.1* - Fixed the wsdl2java script, which was broken in Grails 2.3+.
+* *1.5.5* - Removed `compile` from the wsdl2java script as a dependency.
+* *1.5.4* - Added `tlsClientParameters` to set `disableCNCheck`, `sslCacheTimeout` and `secureSocketProtocol`.
+* *1.5.1* - Added the `contentType` param to allow different http client policy content types.
+* *1.5.0* - Added the `requestContext` param to inject onto the client port object.
+* *1.4.8* - Code cleanup and removal of unused items, no logical code changes.
+* *1.4.7* - Fixed scope for some testing plugins; added excludes for slf4j to a few dependencies.
+* *1.4.6* - Removed some jar deps from the plugin that were causing issues with other plugins.
+* *1.4.5* - Reverted the use of `@Commons` for 1.3.0+ compatibility; added the `secureSocketProtocol` parameter
+  and its `CxfClientConstants` constants.
+* *1.4.4* - Added `inFaultInterceptor` support.
+* *1.4.0* - Updated the wsdl2java script to no longer require the install path; updated CXF to 2.6.1 to match
+  the CXF plugin.
+* *1.3.0* - Added the ability to update the endpoint at runtime; added response mime attachment support.
+* *1.2.9* - Improved exception handling: checked exceptions and SOAPFault exceptions now bubble correctly.
+* *1.2.8* - Added the ability to set `proxyFactoryBindingId` for different bindings, such as soap12.
+* *1.2.7* - Added the ability to set `allowChunking` and to specify a custom `HTTPClientPolicy` bean.
+* *1.2.6* - Added the ability to set `connectionTimeout` and `receiveTimeout` for the client proxy.

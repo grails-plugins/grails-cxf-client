@@ -1,0 +1,13 @@
+[[installation]]
+=== Installation
+
+Add the following dependency to the `build.gradle` file:
+
+[source,groovy]
+----
+dependencies {
+    implementation 'org.grails.plugins:cxf-client:{version}'
+}
+----
+
+TIP: For Grails 3 or 4, use version `3.0.7` of the plugin instead. For Grails 5 or 6, also use `3.0.7`.

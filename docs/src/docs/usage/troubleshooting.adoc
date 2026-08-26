@@ -1,0 +1,31 @@
+[[troubleshooting]]
+=== Troubleshooting
+
+To submit an issue, please use the
+https://github.com/grails-plugins/grails-cxf-client/issues[GitHub issues] page.
+
+==== PKIX path building failed
+
+There is a known issue with pointing to a secure endpoint and running the wsdl2java command. If you get an
+error message like:
+
+[source]
+----
+PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+----
+
+you may need to add the service's certificate to your JDK's trust store. Another option is to fetch the wsdl
+from the web, save it into a local `.wsdl` file, and point the config at the local file instead of the https
+endpoint for generation.
+
+==== Client compile failures / duplicate or recursive wsdl entries
+
+If your compile fails on the generated client classes, you may need to add:
+
+[source,groovy]
+----
+wsdlArgs = ['-autoNameResolution', '-frontend', 'jaxws21']
+----
+
+to your service args. `-autoNameResolution` resolves duplicate or recursive entries in the wsdl, and
+`-frontend jaxws21` forces the generated classes to conform to the 2.1 standard.

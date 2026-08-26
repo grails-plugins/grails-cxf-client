@@ -1,0 +1,34 @@
+[[authorizationPolicy]]
+=== Custom Authorization Policy
+
+If you simply need to set an Authorization Policy, you can create a custom bean in `resources.groovy` and tell
+your CXF client to use it, as below.
+
+`resources.groovy`:
+
+[source,groovy]
+----
+beans = {
+    customAuthorizationPolicy(AuthorizationPolicy) {
+        userName = 'user'
+        password = 'password'
+    }
+}
+----
+
+Client config:
+
+[source,yaml]
+----
+cxf:
+    client:
+        customSecureAuthorizationServiceClient:
+            wsdl: docs/AuthorizationService.wsdl
+            clientInterface: cxf.client.demo.authorization.AuthorizationServicePortType
+            serviceEndpointAddress: http://localhost:8080/services/authorization
+            namespace: cxf.client.demo.authorization
+            authorizationPolicy: customAuthorizationPolicy
+----
+
+NOTE: If you incorrectly refer to your new bean's name (spelling, etc.) you will get an exception such as
+`...Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No bean named 'blahblah' is defined`.

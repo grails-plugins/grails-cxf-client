@@ -1,0 +1,83 @@
+[[securityInterceptors]]
+=== Custom Security Interceptors
+
+As a convenience, an interface is provided that you can inherit from to customize the specifics of the
+interceptor without having to implement all the contract methods for the CXF interceptors. Simply inherit from
+`CxfClientInterceptor` in the `org.grails.cxf.client.security` package. Here is a custom interceptor used in the
+demo project:
+
+[source,groovy]
+----
+package org.grails.cxf.client.security
+
+import org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor
+import org.apache.wss4j.common.ext.WSPasswordCallback
+import org.apache.wss4j.dom.WSConstants
+import org.apache.wss4j.dom.handler.WSHandlerConstants
+import org.grails.cxf.client.CxfClientInterceptor
+import org.grails.cxf.client.exception.CxfClientException
+
+import javax.security.auth.callback.Callback
+import javax.security.auth.callback.CallbackHandler
+import javax.security.auth.callback.UnsupportedCallbackException
+
+class DefaultSecurityOutInterceptor implements CxfClientInterceptor {
+
+    String password
+    String username
+
+    WSS4JOutInterceptor create() {
+        if (!username?.trim() || !password) {
+            throw new CxfClientException('Username and password are not configured for calling secure web services')
+        }
+
+        Map<String, Object> outProps = [:]
+        outProps.put(WSHandlerConstants.ACTION, WSHandlerConstants.USERNAME_TOKEN)
+        outProps.put(WSHandlerConstants.USER, username)
+        outProps.put(WSHandlerConstants.PASSWORD_TYPE, WSConstants.PW_TEXT)
+        outProps.put(WSHandlerConstants.PW_CALLBACK_REF, new CallbackHandler() {
+
+            void handle(Callback[] callbacks) throws IOException, UnsupportedCallbackException {
+                WSPasswordCallback pc = callbacks[0]
+                pc.password = password
+            }
+        })
+        new WSS4JOutInterceptor(outProps)
+    }
+}
+----
+
+Your `create()` method must return an object that already inherits from the appropriate classes, such as
+`WSS4JOutInterceptor` as used here. It is technically possible for your interceptor to extend something like
+`SoapHeaderInterceptor`; you would just be responsible for overriding all the appropriate methods yourself. The
+best documentation on writing a complex interceptor can be found at the
+https://cxf.apache.org/docs/interceptors.html[Apache CXF] site.
+
+In the case of the `DefaultSecurityOutInterceptor` above, place the following in your project's
+`resources.groovy`:
+
+[source,groovy]
+----
+beans = {
+    myCustomerSecurityOutInterceptor(DefaultSecurityOutInterceptor) {
+        username = 'wsuser'
+        password = 'password'
+    }
+}
+----
+
+The last step to hooking up the custom interceptor is to define the `securityInterceptor` for the client config
+block:
+
+[source,yaml]
+----
+cxf:
+    client:
+        customSecureServiceClient:
+            wsdl: docs/SecureService.wsdl
+            namespace: cxf.client.demo.secure
+            clientInterface: cxf.client.demo.secure.SecureServicePortType
+            secured: true
+            securityInterceptor: myCustomerSecurityOutInterceptor
+            serviceEndpointAddress: http://localhost:8080/services/secure
+----

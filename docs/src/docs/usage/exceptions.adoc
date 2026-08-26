@@ -1,0 +1,41 @@
+[[exceptions]]
+=== Dealing With Exceptions
+
+Services with checked exceptions defined will throw them as designed. Given a service that throws an exception
+(`ComplexContrivedException_Exception` in this example) as follows:
+
+[source,java]
+----
+@WebResult(name = "return", targetNamespace = "")
+@RequestWrapper(localName = "complexMethod3", targetNamespace = "http://demo.client.cxf/", className = "cxf.client.demo.complex.ComplexMethod3")
+@WebMethod
+@ResponseWrapper(localName = "complexMethod3Response", targetNamespace = "http://demo.client.cxf/", className = "cxf.client.demo.complex.ComplexMethod3Response")
+public cxf.client.demo.complex.ComplexResponse complexMethod3(
+    @WebParam(name = "request", targetNamespace = "")
+    cxf.client.demo.complex.ComplexRequest request
+) throws ComplexContrivedException_Exception;
+----
+
+the checked exception can be caught in code and dealt with as desired:
+
+[source,groovy]
+----
+try {
+    response1 = complexServiceClient.complexMethod3(request1)
+} catch (ComplexContrivedException_Exception e) {
+    log.error e
+}
+----
+
+In addition, any general `SOAPFaultException` thrown can be caught as well:
+
+[source,groovy]
+----
+try {
+    response1 = complexServiceClient.complexMethod3(request1)
+} catch (ComplexContrivedException_Exception e) {
+    log.error e
+} catch (SOAPFaultException e) {
+    log.error e
+}
+----

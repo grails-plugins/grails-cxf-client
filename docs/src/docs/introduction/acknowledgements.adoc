@@ -1,0 +1,15 @@
+[[acknowledgements]]
+=== Acknowledgments
+
+Following are the plugin contributors:
+
+* https://github.com/ctoestreich[Christian Oestreich]
+* https://github.com/dauer[Thomas Rasmussen]
+* https://github.com/laurahelde[Laura Helde]
+* https://github.com/sbglasius[Søren Berg Glasius]
+* https://github.com/froderik[Fredrik Rubensson]
+* https://github.com/kgeis[Ken Geis]
+* https://github.com/jarl-dk[Jarl Friis]
+* https://github.com/darxriggs[René Scheibe]
+
+Kyle Dickerson, Brett Borchardt and Jordan Howe also contributed to earlier versions of this plugin.
