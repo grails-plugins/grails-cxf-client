@@ -1,0 +1,7 @@
+[[mimeAttachments]]
+=== Mime Attachments
+
+Support for mime type attachments in a response requires setting both the `wsdl` and `wsdlServiceName`
+properties. This is done so that CXF can correctly resolve the attachment data against the wsdl. If you fail to
+set these you may see an `IndexOutOfBounds` exception thrown from CXF. You may also need to define
+`wsdlEndpointName`.

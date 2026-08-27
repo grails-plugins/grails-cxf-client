@@ -1,0 +1,39 @@
+[[wsdlToJavaManually]]
+=== WsdlToJava Manually
+
+If you already have a wsdl2java generated object graph and client proxy, you can skip this section.
+
+You must be somewhat familiar with how to run wsdl2java. Run something like the following command to generate
+JAXB objects and a service proxy adapter, replacing the paths with something applicable for you. Run this by
+either having wsdl2java in your path or from the `bin` directory of the Apache CXF distribution:
+
+[source,bash]
+----
+wsdl2java -compile -client -d [output path] [path to wsdl]
+----
+
+Here is an example (with the wsdl saved locally to a `.wsdl` file in the current working directory):
+
+[source,bash]
+----
+c:\apps\apache-cxf-2.4.2\bin\wsdl2java -compile -client -d . -p cxf.client.demo.complex ComplexService.wsdl
+----
+
+Then jar up the generated files:
+
+[source,bash]
+----
+jar -cvf complex-service-cxf.jar cxf
+----
+
+Put the jar into your project's lib dir (and generate any more jars you need). For example, to generate another
+for the Simple Service:
+
+[source,bash]
+----
+c:\apps\apache-cxf-2.4.2\bin\wsdl2java -compile -client -d . -p cxf.client.demo.simple SimpleService.wsdl
+jar -cvf simple-service-cxf.jar cxf
+----
+
+NOTE: These could be put in the same jar since the namespaces used are different: `cxf.client.demo.complex` and
+`cxf.client.demo.simple`.

@@ -1,0 +1,40 @@
+---
+grails:
+    profile: web
+    codegen:
+        defaultPackage: org.grails.cxf.client
+info:
+    app:
+        name: '@info.app.name@'
+        version: '@info.app.version@'
+        grailsVersion: '@info.app.grailsVersion@'
+spring:
+    groovy:
+        template:
+            check-template-location: false
+server:
+    port: 8082
+---
+cxf:
+    client:
+        # Demo client used by StockQuoteClientSpec. webservicex.net's stock quote
+        # demo service has been offline for years, so the endpoint below is not
+        # reachable — the config below only demonstrates client wiring, not a
+        # working live call. See the tests that ARE @Ignore'd in that spec for
+        # the ones that need the live service.
+        stockQuoteClient:
+            clientInterface: net.webservicex.StockQuoteSoap
+            serviceEndpointAddress: http://www.webservicex.net/stockquote.asmx
+            connectionTimeout: 120000
+            receiveTimeout: 120000
+            contentType: 'text/xml; charset=UTF-8'
+            requestContext:
+                requestKey: requestValue
+        stockQuoteClient2:
+            clientInterface: net.webservicex.StockQuoteSoap
+            serviceEndpointAddress: http://www.webservicex.net/stockquote.asmx
+            connectionTimeout: "2000"
+            receiveTimeout: "2000"
+            contentType: 'application/soap+xml; charset=UTF-8'
+            requestContext:
+                requestKey2: requestValue2

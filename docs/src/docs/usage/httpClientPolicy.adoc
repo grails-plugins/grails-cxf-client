@@ -1,0 +1,43 @@
+[[httpClientPolicy]]
+=== Custom HTTP Client Policy
+
+If you simply need to set the `connectionTimeout`, `receiveTimeout`, or `allowChunking`, you may use the three
+provided params directly. If you require more fine grained control of the `HTTPClientPolicy` you can create a
+custom bean in `resources.groovy` and tell your CXF client to use it, as below.
+
+NOTE: A configured `httpClientPolicy` takes precedence over `connection`, `connectionTimeout`, `receiveTimeout`
+and `allowChunking`. Setting all four params in the config causes the `httpClientPolicy` to be used and the
+others ignored.
+
+`resources.groovy`:
+
+[source,groovy]
+----
+beans = {
+    customHttpClientPolicy(HTTPClientPolicy) {
+        connectionTimeout = 30000
+        receiveTimeout = 60000
+        allowChunking = false
+        autoRedirect = false
+        connection = org.apache.cxf.transports.http.configuration.ConnectionType.KEEP_ALIVE
+    }
+}
+----
+
+Client config:
+
+[source,yaml]
+----
+cxf:
+    client:
+        simpleServiceClient:
+            wsdl: docs/SimpleService.wsdl
+            wsdlArgs: -autoNameResolution
+            clientInterface: cxf.client.demo.simple.SimpleServicePortType
+            serviceEndpointAddress: http://localhost:8080/services/simple
+            namespace: cxf.client.demo.simple
+            httpClientPolicy: customHttpClientPolicy
+----
+
+NOTE: If you incorrectly refer to your new bean's name (spelling, etc.) you will get an exception such as
+`...Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No bean named 'blahblah' is defined`.

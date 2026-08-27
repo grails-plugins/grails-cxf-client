@@ -1,0 +1,8 @@
+= Grails CXF Client - Reference Documentation
+Grails Plugins Consortium
+
+include::introduction.adoc[]
+
+include::usage.adoc[]
+
+include::releaseNotes.adoc[]
