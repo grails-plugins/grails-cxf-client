@@ -3,6 +3,8 @@
 //
 // Run it locally with:
 //   groovy .github/scripts/verify-repository.groovy
+// or, without a local Groovy, through Docker like CI does:
+//   .github/scripts/groovy.sh .github/scripts/verify-repository.groovy
 //
 // It works both in the template repo itself and in any repo that received a
 // files-sync.yml sync from it — template-only checks are gated on the
@@ -11,7 +13,6 @@
 // Exit code is non-zero if any error was found. Warnings are printed but do
 // not fail the run unless VERIFY_STRICT=1 is set, in which case they are
 // escalated to errors too.
-@Grab('org.apache.groovy:groovy-yaml')
 import groovy.yaml.YamlSlurper
 
 def errors = []
@@ -426,6 +427,12 @@ if (isTemplate) {
             err("ci.yml job '${jobId}' does not guard against running in the template repo itself " +
                 "(expected its 'if:' to contain \"${repoGuard}\")")
         }
+    }
+
+    def contributorsJob = loadYaml('.github/workflows/update-contributors.yml')?.jobs?.get('update-contributors')
+    if (contributorsJob != null && !((contributorsJob.'if' as String)?.contains(repoGuard))) {
+        err("update-contributors.yml job 'update-contributors' does not guard against running in the template " +
+            "repo itself (expected its 'if:' to contain \"${repoGuard}\")")
     }
 
     // ci.yml is synced, but synced repos have no conventions/ directory to test
