@@ -22,16 +22,10 @@ contributors:
   darxriggs: "René Scheibe"
   ashalitkin: "ashalitkin"
 versions:
-  current: "3.0.4"
+  current: "5.0.0"
   previous:
-    - "3.0.4"
-    - "3.0.1"
-    - "2.0.2"
-    - "1.4.7"
-    - "1.4.6"
-    - "1.4.4"
-    - "1.4.2"
-    - "1.4.1"
-    - "1.4.0"
+  - "5.0.0"
+  - "5.0.0-RC1"
+  - "5.0.x"
   ignore:
-    - "snapshot"
+  - "snapshot"
