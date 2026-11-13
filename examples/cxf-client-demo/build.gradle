@@ -31,8 +31,6 @@ dependencies {
     implementation "org.apache.cxf:cxf-rt-transports-http:${cxfVersion}"
     implementation "org.apache.cxf:cxf-rt-ws-security:${cxfVersion}"
 
-    runtimeOnly "org.fusesource.jansi:jansi"
-
     testImplementation platform("org.apache.grails:grails-bom:$grailsVersion")
     testImplementation "org.apache.grails.testing:grails-testing-support-core"
     testImplementation "org.spockframework:spock-core"

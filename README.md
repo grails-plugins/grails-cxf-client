@@ -18,18 +18,36 @@ The user guide can be found here: 📚 [Documentation](https://grails-plugins.gi
 
 Add the following dependency to the `build.gradle` file:
 
+### Grails 8.x
+
+```groovy
+dependencies {
+    // To be released ...
+}
+```
+
 ### Grails 7.x
 
 ```groovy
 dependencies {
-    implementation 'org.grails.plugins:cxf-client:5.0.0-RC1'
+    implementation 'org.grails.plugins:cxf-client:5.0.0'
 }
 ```
 
-### Grails 3, 4, 5, 6
+### Grails 5, 6
 
 ```groovy
-compile 'org.grails.plugins:cxf-client:3.0.7'
+dependencies {
+    implementation 'org.grails.plugins:cxf-client:3.0.7'
+}
+```
+
+### Grails 3, 4
+
+```groovy
+dependencies {
+    compile 'org.grails.plugins:cxf-client:3.0.7'
+}
 ```
 
 See the [documentation](https://grails-plugins.github.io/grails-cxf-client/) for configuration, the wsdl2java

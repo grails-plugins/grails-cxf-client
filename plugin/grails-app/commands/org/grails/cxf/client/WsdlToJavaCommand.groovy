@@ -1,8 +1,8 @@
 package org.grails.cxf.client
 
 import grails.core.GrailsApplication
-import grails.dev.commands.ApplicationCommand
-import grails.dev.commands.ExecutionContext
+import org.apache.grails.core.cli.ApplicationCommand
+import org.apache.grails.core.cli.ExecutionContext
 import org.grails.cxf.client.util.WsdlToJavaUtil
 import org.springframework.beans.factory.annotation.Autowired
 
