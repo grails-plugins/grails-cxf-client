@@ -2,8 +2,8 @@ package org.grails.cxf.client
 
 import mock.SimpleServicePortType
 import org.apache.cxf.configuration.security.AuthorizationPolicy
-import org.apache.cxf.interceptor.LoggingInInterceptor
-import org.apache.cxf.interceptor.LoggingOutInterceptor
+import org.apache.cxf.ext.logging.LoggingInInterceptor
+import org.apache.cxf.ext.logging.LoggingOutInterceptor
 import org.apache.cxf.transports.http.configuration.ConnectionType
 import org.apache.cxf.transports.http.configuration.HTTPClientPolicy
 import org.grails.cxf.client.exception.UpdateServiceEndpointException
