@@ -1,0 +1,4 @@
+org.grails.cxf.client
+org.grails.cxf.client.exception
+org.grails.cxf.client.security
+org.grails.cxf.client.util
